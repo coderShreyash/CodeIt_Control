@@ -1,0 +1,127 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeIt Control</title>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+  
+  
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+  
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+    apiKey: "AIzaSyAuvlQF0Qdgk7HtqII4d_cuwoRVoIA58IY",
+    authDomain: "codeit1.firebaseapp.com",
+    projectId: "codeit1",
+    storageBucket: "codeit1.appspot.com",
+    messagingSenderId: "1438261598",
+    appId: "1:1438261598:web:619819c205db246e512fcf"
+  };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <style>
+      body{
+        background:linear-gradient(to bottom right,#81fbb8,#28c76f);
+
+      }
+      label
+      {
+          font-size: larger;
+          font-weight: 700;
+          color:white;
+          text-shadow: -1px 1px 1px black, -1px 1px 5px black;
+      }
+      button
+      {
+          background:linear-gradient(cyan,blueviolet);
+          text-shadow: -1px 1px 1px black, -1px 1px 5px black;
+          border: none;
+          border-radius: 10px;
+          font-size: 125%;
+          color: white;
+          font-weight: 700;
+          padding: 5px;
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+        input
+        {
+            border: 1px solid black;
+            color: black;
+
+        }
+        select
+        {
+            border: 1px solid black;
+            font-size: large;
+        }
+  </style>
+</head>
+<body>
+   <h1 >Welcome Lord, What would you like to add </h1>
+
+   <div>
+<label>Name: </label><input type="text" id="name" placeholder="Enter Name"><br><br>
+<label>Description: </label><input type="text" id="desc" placeholder="Enter Description"><br><br>
+
+<label>Category: </label><select id="cat">
+    <option value="games">games</option>
+    <option value="html">html</option>
+    <option value="css">css</option>
+    <option value="python">python</option>
+    <option value="js">js</option>
+</select>
+<br><br>
+<label>Image: </label><input type="text" id="image" placeholder="Enter Image"><br><br>
+<label>Output: </label><input type="text" id="output" placeholder="Enter Output"><br><br>
+<label>Source Code: </label><input type="text" id="src" placeholder="Enter Source Code"><br><br>
+<label>Video: </label><input type="text" id="url" placeholder="Enter Video"><br><br>
+
+<button onclick="addproject()">Add Project</button>
+   </div>
+
+   <script>
+   var vids=0;
+   var vid = "";
+       var database = firebase.database()
+       database.ref("Videos/Vids").on('value',
+       function(data){
+vids=data.val()
+       }
+       )
+
+       function addproject(){
+        database.ref("Videos/Vids").on('value',function(data){vids=data.val()})
+           vids++;
+           database.ref("Videos").set({
+               Vids:vids
+           })
+           database.ref("Vid"+vids).set({
+               name:document.getElementById("name").value,
+               desc:document.getElementById("desc").value,
+               image:document.getElementById("image").value,
+               output:document.getElementById("output").value,
+               src:document.getElementById("src").value,
+               url:document.getElementById("url").value
+           })
+           yeno = confirm("Added !\n Wanna Keep It Still There ?")
+     if(!yeno){
+        document.getElementById("name").value = ""
+        document.getElementById("desc").value = ""
+        document.getElementById("image").value = ""
+        document.getElementById("output").value = ""
+        document.getElementById("src").value = ""
+        document.getElementById("url").value = ""
+     }
+       }
+   
+   </script>
+</body>
+</html>
